@@ -1,0 +1,500 @@
+
+#include "CLOCK_DS3231.h"
+#include "stm32f1xx_hal.h"
+#include "stm32f1xx.h"
+#include "stm32f1xx_it.h"
+#include "main.h"
+
+extern UART_HandleTypeDef huart1;
+extern I2C_HandleTypeDef hi2c1;
+
+///////////////////////////////////////////////////////////////////////////////////////////////
+// Read data from clock module
+void read_data_from_DS3231(void)
+{
+			STATUS=HAL_I2C_Mem_Read(&hi2c1, ADRESS_DEVCE_DS3231<<1,Read_sec, (uint16_t) sizebuf, buff, sizebuf_data_return, timeout);
+	    if(STATUS==HAL_OK)
+			{
+				     // SEC
+				     sec=RTC_ConvertFromDec(buff[0]);
+				     // MIN
+				     min=RTC_ConvertFromDec(buff[1]);
+				     // HOUR
+				     uint8_t H=buff[2]&0x1F;
+				     hour=RTC_ConvertFromDec(H);
+				     // DAY
+				     day=RTC_ConvertFromDec(buff[3]);
+				     // DATE
+				     date=RTC_ConvertFromDec(buff[4]);
+				     // MONTH
+				     H=buff[5]&0x1F;
+				     month=RTC_ConvertFromDec(H);
+				     // YEAR
+				     year=RTC_ConvertFromDec(buff[6]);   
+			}
+      else								// If ettor STATE
+			{
+				    while(1)
+						{
+						}
+						//Error hendler
+			}
+			
+			// Print data in COMPORT
+			uint8_t size=0;
+			sprintf(str,"SEC:%d MIN:%d HOUR:%d\r\n", sec, min, hour);      // convert   in  str 
+			size=sizeof(str);
+			HAL_UART_Transmit(&huart1 , (uint8_t *)str, size, 0xFFF); 
+			sprintf(str,"DAY:%d DATE:%d MOUNT:%d YEAR:%d \r\n",day, date, month, year);      // convert   in  str 
+			size=sizeof(str);
+			HAL_UART_Transmit(&huart1 , (uint8_t *)str, size, 0xFFF); 
+}
+///////////////////////////////////////////////////////////////////////////////////////////////
+uint8_t RTC_ConvertFromDec(uint8_t c)
+{
+        uint8_t ch = ((c>>4)*10+(0x0F&c));
+        return ch;
+}
+///////////////////////////////////////////////////////////////////////////////////////////////
+uint8_t RTC_ConvertFromBinDec(uint8_t c)
+{
+        uint8_t ch = ((c/10)<<4)|(c%10);
+        return ch;
+}
+///////////////////////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////////////////////
+
+uint8_t WRITE_DATA(uint16_t reg_DS3231, uint8_t data_to_DS3231)
+{
+			// This function write some data in DS3231;
+		  uint8_t size=0;
+	
+			STATUS=HAL_I2C_Mem_Write(&hi2c1, ADRESS_DEVCE_DS3231<<1, reg_DS3231, sizebuf, &data_to_DS3231, return_one_byre, timeout);
+	    if(STATUS==HAL_OK)
+			{
+				    sprintf(str,"MIN WAS SET \r\n");      // convert   in  str 
+		      	size=sizeof(str);
+      			HAL_UART_Transmit(&huart1 , (uint8_t *)str, size, 0xFFF);     
+				    HAL_Delay(1000);
+			}
+      else
+			{
+				    while(1)
+						{
+									sprintf(str,"ERROR \r\n");      // convert   in  str 
+									size=sizeof(str);
+									HAL_UART_Transmit(&huart1 , (uint8_t *)str, size, 0xFFF);     
+									HAL_Delay(1000);
+						}
+						//Error hendler
+			}
+}
+///////////////////////////////////////////////////////////////////////////////////////////////
+
+
+
+
+
+///////////////////////////////////////////////////////////////////////////////////////////////
+void set_seconds(void)
+{ 
+		uint8_t size=0;
+		char str3[35]={0};
+		uint8_t size_mas=sizeof(str3);
+		uint8_t i=0;
+
+		uint8_t SEC=0;
+		uint8_t STATUS=1;
+		while(STATUS)
+		{
+			
+			  sprintf(str3,"MIN: %d\r\n",SEC);      										// convert   in  str 
+				size=sizeof(str3);
+				HAL_UART_Transmit(&huart1 , (uint8_t *)str3, size, 0xFFFF);
+			  HAL_Delay(200);
+			   
+			  if(button_2==STATUS_BUTTON_PRESS)
+				{
+						SEC++;
+						if(SEC>=60)
+						{
+								SEC=0;	
+						}
+				}
+				if(button_3==STATUS_BUTTON_PRESS)
+				{
+					  SEC--;
+					  if(SEC>=60)
+						{
+								SEC=0;	
+						}
+				}
+			
+			  // EXIT FROM SETTINGS		
+				if(button_4==STATUS_BUTTON_PRESS)	   // EXIT
+				{
+							STATUS=0;
+					    // SET HOUR
+							//set_sec(SEC);			// Write new hour
+					    WRITE_DATA(ADDRES_SEC_REG, SEC);
+				}			  
+		}
+}
+///////////////////////////////////////////////////////////////////////////////////////////////
+void set_minutes(void)
+{ 
+		uint8_t size=0;
+		char str3[35]={0};
+		uint8_t size_mas=sizeof(str3);
+		uint8_t i=0;
+
+		uint8_t MIN=0;
+		uint8_t STATUS=1;
+		while(STATUS)
+		{
+			
+			  sprintf(str3,"MIN: %d\r\n",MIN);      										// convert   in  str 
+				size=sizeof(str3);
+				HAL_UART_Transmit(&huart1 , (uint8_t *)str3, size, 0xFFFF);
+			  HAL_Delay(200);
+			   
+			  if(button_2==STATUS_BUTTON_PRESS)
+				{
+						MIN++;
+						if(MIN>=60)
+						{
+								MIN=0;	
+						}
+				}
+				if(button_3==STATUS_BUTTON_PRESS)
+				{
+					  MIN--;
+					  if(MIN>=60)
+						{
+								MIN=0;	
+						}
+				}
+			
+			  // EXIT FROM SETTINGS		
+				if(button_4==STATUS_BUTTON_PRESS)	   // EXIT
+				{
+							STATUS=0;
+					    // SET HOUR
+							//set_min(MIN);			// Write new hour
+							WRITE_DATA(ADDRES_MIN_REG, MIN);
+				}			  
+		}
+}
+///////////////////////////////////////////////////////////////////////////////////////////////
+void set_hours(void)
+{ 
+		uint8_t size=0;
+		char str3[35]={0};
+		uint8_t size_mas=sizeof(str3);
+		uint8_t i=0;
+
+		uint8_t HOUR=0;
+		uint8_t STATUS=1;
+		while(STATUS)
+		{
+			
+			  sprintf(str3,"HOUT: %d\r\n",HOUR);      										// convert   in  str 
+				size=sizeof(str3);
+				HAL_UART_Transmit(&huart1 , (uint8_t *)str3, size, 0xFFFF);
+			  HAL_Delay(200);
+			   
+			  if(button_2==STATUS_BUTTON_PRESS)
+				{
+						HOUR++;
+						if(HOUR>=24)
+						{
+								HOUR=0;	
+						}
+				}
+				if(button_3==STATUS_BUTTON_PRESS)
+				{
+					  HOUR--;
+					  if(HOUR>=24)
+						{
+								HOUR=0;	
+						}
+				}
+			
+			  // EXIT FROM SETTINGS		
+				if(button_4==STATUS_BUTTON_PRESS)	   // EXIT
+				{
+							STATUS=0;
+					    // SET HOUR
+							//set_hour(HOUR);			// Write new hour
+							WRITE_DATA(ADDRES_HOUR_REG, HOUR);
+				}			  
+		}
+}
+///////////////////////////////////////////////////////////////////////////////////////////////
+void set_days(void)
+{ 
+		uint8_t size=0;
+		char str3[35]={0};
+		uint8_t size_mas=sizeof(str3);
+		uint8_t i=0;
+
+		uint8_t DAY=1;
+		uint8_t STATUS=1;
+		while(STATUS)
+		{
+			
+			  sprintf(str3,"MIN: %d\r\n",DAY);      										// convert   in  str 
+				size=sizeof(str3);
+				HAL_UART_Transmit(&huart1 , (uint8_t *)str3, size, 0xFFFF);
+			  HAL_Delay(200);
+			   
+			  if(button_2==STATUS_BUTTON_PRESS)
+				{
+						DAY++;
+						if(DAY>=8)
+						{
+								DAY=1;	
+						}
+				}
+				if(button_3==STATUS_BUTTON_PRESS)
+				{
+					  DAY--;
+					  if(DAY<=0)
+						{
+								DAY=1;	
+						}
+				}
+			
+			  // EXIT FROM SETTINGS		
+				if(button_4==STATUS_BUTTON_PRESS)	   // EXIT
+				{
+							STATUS=0;
+					    // SET HOUR
+							//set_day(DAY);			// Write new hour
+							WRITE_DATA(ADDRES_DAY_REG, DAY);
+				}			  
+		}
+}
+///////////////////////////////////////////////////////////////////////////////////////////////
+void set_dates(void)
+{ 
+		uint8_t size=0;
+		char str3[35]={0};
+		uint8_t size_mas=sizeof(str3);
+		uint8_t i=0;
+
+		uint8_t DATA=1;
+		uint8_t STATUS=1;
+		while(STATUS)
+		{
+			
+			  sprintf(str3,"DATE: %d\r\n",DATA);      										// convert   in  str 
+				size=sizeof(str3);
+				HAL_UART_Transmit(&huart1 , (uint8_t *)str3, size, 0xFFFF);
+			  HAL_Delay(200);
+			   
+			  if(button_2==STATUS_BUTTON_PRESS)
+				{
+						DATA++;
+						if(DATA>=32)
+						{
+								DATA=1;	
+						}
+				}
+				if(button_3==STATUS_BUTTON_PRESS)
+				{
+					  DATA--;
+					  if(DATA<=0)
+						{
+								DATA=1;	
+						}
+				}
+			
+			  // EXIT FROM SETTINGS		
+				if(button_4==STATUS_BUTTON_PRESS)	   // EXIT
+				{
+							STATUS=0;
+					    // SET HOUR
+							//set_date(DATA);			// Write new hour
+							WRITE_DATA(ADDRES_DATE_REG, DATA);
+				}			  
+		}
+}
+///////////////////////////////////////////////////////////////////////////////////////////////
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/////////////////////////////////////////////////////////////////////////////////////////////////
+//uint8_t set_sec(uint8_t sec)
+//{
+//			uint8_t size=0;
+//	
+//			STATUS=HAL_I2C_Mem_Write(&hi2c1, ADRESS_DEVCE_DS3231<<1, ADDRES_SEC_REG, sizebuf, &sec, return_one_byre, timeout);
+//	    if(STATUS==HAL_OK)
+//			{
+//				    sprintf(str,"MIN WAS SET \r\n");      // convert   in  str 
+//		      	size=sizeof(str);
+//      			HAL_UART_Transmit(&huart1 , (uint8_t *)str, size, 0xFFF);     
+//				    HAL_Delay(1000);
+//			}
+//      else
+//			{
+//				    while(1)
+//						{
+//									sprintf(str,"ERROR \r\n");      // convert   in  str 
+//									size=sizeof(str);
+//									HAL_UART_Transmit(&huart1 , (uint8_t *)str, size, 0xFFF);     
+//									HAL_Delay(1000);
+//						}
+//						//Error hendler
+//			}
+//}
+/////////////////////////////////////////////////////////////////////////////////////////////////
+//uint8_t set_min(uint8_t min)
+//{
+//			uint8_t size=0;
+//	
+//			STATUS=HAL_I2C_Mem_Write(&hi2c1, ADRESS_DEVCE_DS3231<<1, ADDRES_MIN_REG, sizebuf, &min, return_one_byre, timeout);
+//	    if(STATUS==HAL_OK)
+//			{
+//				    sprintf(str,"MIN WAS SET \r\n");      // convert   in  str 
+//		      	size=sizeof(str);
+//      			HAL_UART_Transmit(&huart1 , (uint8_t *)str, size, 0xFFF);     
+//				    HAL_Delay(1000);
+//			}
+//      else
+//			{
+//				    while(1)
+//						{
+//									sprintf(str,"ERROR \r\n");      // convert   in  str 
+//									size=sizeof(str);
+//									HAL_UART_Transmit(&huart1 , (uint8_t *)str, size, 0xFFF);     
+//									HAL_Delay(1000);
+//						}
+//						//Error hendler
+//			}
+//}
+/////////////////////////////////////////////////////////////////////////////////////////////////
+//uint8_t set_hour(uint8_t hour)
+//{
+//			// Function set hour.
+//			uint8_t size=0;
+//	
+//			STATUS=HAL_I2C_Mem_Write(&hi2c1, ADRESS_DEVCE_DS3231<<1, ADDRES_HOUR_REG, sizebuf, &hour, return_one_byre, timeout);
+//	    if(STATUS==HAL_OK)
+//			{
+//				    sprintf(str,"HOUR WAS SET \r\n");      // convert   in  str 
+//		      	size=sizeof(str);
+//      			HAL_UART_Transmit(&huart1 , (uint8_t *)str, size, 0xFFF);     
+//				    HAL_Delay(1000);
+//			}
+//      else
+//			{
+//				    while(1)
+//						{
+//									sprintf(str,"ERROR \r\n");      // convert   in  str 
+//									size=sizeof(str);
+//									HAL_UART_Transmit(&huart1 , (uint8_t *)str, size, 0xFFF);     
+//									HAL_Delay(1000);
+//						}
+//						//Error hendler
+//			}	 
+//}
+////////////////////////////////////////////////////////////////////////////////////////////////////
+//uint8_t set_day(uint8_t day)
+//{
+//			uint8_t size=0;
+//	
+//			STATUS=HAL_I2C_Mem_Write(&hi2c1, ADRESS_DEVCE_DS3231<<1, ADDRES_DAY_REG, sizebuf, &day, return_one_byre, timeout);
+//	    if(STATUS==HAL_OK)
+//			{
+//				    sprintf(str,"DAY WAS SET \r\n");      // convert   in  str 
+//		      	size=sizeof(str);
+//      			HAL_UART_Transmit(&huart1 , (uint8_t *)str, size, 0xFFF);     
+//				    HAL_Delay(1000);
+//			}
+//      else
+//			{
+//				    while(1)
+//						{
+//									sprintf(str,"ERROR \r\n");      // convert   in  str 
+//									size=sizeof(str);
+//									HAL_UART_Transmit(&huart1 , (uint8_t *)str, size, 0xFFF);     
+//									HAL_Delay(1000);
+//						}
+//						//Error hendler
+//			}
+//}
+////////////////////////////////////////////////////////////////////////////////////////////////////
+//uint8_t set_date(uint8_t date)
+//{
+//			uint8_t size=0;
+//	
+//			STATUS=HAL_I2C_Mem_Write(&hi2c1, ADRESS_DEVCE_DS3231<<1, ADDRES_DATE_REG, sizebuf, &date, return_one_byre, timeout);
+//	    if(STATUS==HAL_OK)
+//			{
+//				    sprintf(str,"DAY WAS SET \r\n");      // convert   in  str 
+//		      	size=sizeof(str);
+//      			HAL_UART_Transmit(&huart1 , (uint8_t *)str, size, 0xFFF);     
+//				    HAL_Delay(1000);
+//			}
+//      else
+//			{
+//				    while(1)
+//						{
+//									sprintf(str,"ERROR \r\n");      // convert   in  str 
+//									size=sizeof(str);
+//									HAL_UART_Transmit(&huart1 , (uint8_t *)str, size, 0xFFF);     
+//									HAL_Delay(1000);
+//						}
+//						//Error hendler
+//			}
+//			 
+//}
+//////////////////////////////////////////////////////////////////////////////////////////////////
+
+
+
+
+//////////////////////////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////////////////////////////
+
+//////////////////////////////////////////////////////////////////////////////////////////////////

@@ -1,0 +1,116 @@
+<html>
+<body>
+<pre>
+<h1>µVision Build Log</h1>
+<h2>Tool Versions:</h2>
+IDE-Version: µVision V5.28.0.0
+Copyright (C) 2019 ARM Ltd and ARM Germany GmbH. All rights reserved.
+License Information: Oleg Demkiv, Home, LIC=----
+ 
+Tool Versions:
+Toolchain:       MDK-Lite  Version: 5.28.0.0
+Toolchain Path:  C:\Keil_v5\ARM\ARMCC\Bin
+C Compiler:      Armcc.exe V5.06 update 6 (build 750)
+Assembler:       Armasm.exe V5.06 update 6 (build 750)
+Linker/Locator:  ArmLink.exe V5.06 update 6 (build 750)
+Library Manager: ArmAr.exe V5.06 update 6 (build 750)
+Hex Converter:   FromElf.exe V5.06 update 6 (build 750)
+CPU DLL:         SARMCM3.DLL V5.28.0.0
+Dialog DLL:      DCM.DLL V1.17.3.0
+Target DLL:      STLink\ST-LINKIII-KEIL_SWO.dll V3.0.6.0
+Dialog DLL:      TCM.DLL V1.36.2.0
+ 
+<h2>Project:</h2>
+D:\Others\RESERVE_COPY_PROJECTS\CLOCK\CLOCK\Clock\FW\MDK-ARM\CLOCK_STM32F103C8.uvprojx
+Project File Date:  02/10/2019
+
+<h2>Output:</h2>
+*** Using Compiler 'V5.06 update 6 (build 750)', folder: 'C:\Keil_v5\ARM\ARMCC\Bin'
+Rebuild target 'CLOCK_STM32F103C8'
+assembling startup_stm32f103xb.s...
+compiling ILI9341_STM32_Driver.c...
+compiling CLOCK_DS3231.c...
+CLOCK_DS3231.c(25): warning:  #177-D: variable "size"  was declared but never referenced
+           uint8_t size=0;
+CLOCK_DS3231.c(119): warning:  #177-D: variable "size"  was declared but never referenced
+                  uint8_t size=0;
+CLOCK_DS3231.c: 2 warnings, 0 errors
+compiling I2S_SCANER.c...
+I2S_SCANER.c(73): warning:  #1-D: last line of file ends without a newline
+  ///////////////////////////////////////////////////////////////////////////////////////////////
+I2S_SCANER.c: 1 warning, 0 errors
+compiling ILI9341_GFX.c...
+compiling BME280.c...
+BME280.c(336): warning:  #175-D: subscript out of range
+                dig_H1=(unsigned short)buf_calibration_data[25];    ////  25   ?????????
+BME280.c(389): warning: C4487E: read from variable 'buf_calibration_data' with offset out of bounds
+}
+BME280.c: 2 warnings, 0 errors
+compiling NRF24.c...
+compiling DHT22.c...
+../Inc/DHT22.h(12): warning:  #1-D: last line of file ends without a newline
+  #endif /* DHT22_H_ */
+DHT22.c(66): warning:  #940-D: missing return statement at end of non-void function "DHD22_GetData" 
+  }
+DHT22.c(43): warning:  #177-D: variable "i"  was declared but never referenced
+        uint8_t i, j=0;
+DHT22.c(43): warning:  #177-D: variable "j"  was declared but never referenced
+        uint8_t i, j=0;
+DHT22.c(67): warning:  #1-D: last line of file ends without a newline
+  //--------------------------------------------------
+DHT22.c: 5 warnings, 0 errors
+compiling main.c...
+../Inc/DHT22.h(12): warning:  #1-D: last line of file ends without a newline
+  #endif /* DHT22_H_ */
+../Src/main.c(581): warning:  #177-D: variable "status"  was declared but never referenced
+           uint8_t status=3;
+../Src/main.c: 2 warnings, 0 errors
+compiling stm32f1xx_it.c...
+compiling stm32f1xx_hal_msp.c...
+compiling stm32f1xx_hal_gpio_ex.c...
+compiling stm32f1xx_hal_i2c.c...
+compiling stm32f1xx_hal_spi.c...
+compiling stm32f1xx_hal_spi_ex.c...
+compiling stm32f1xx_hal_tim.c...
+compiling stm32f1xx_hal_tim_ex.c...
+compiling stm32f1xx_hal_uart.c...
+compiling stm32f1xx_hal.c...
+compiling stm32f1xx_hal_rcc.c...
+compiling stm32f1xx_hal_rcc_ex.c...
+compiling stm32f1xx_hal_gpio.c...
+compiling stm32f1xx_hal_dma.c...
+compiling stm32f1xx_hal_cortex.c...
+compiling stm32f1xx_hal_pwr.c...
+compiling stm32f1xx_hal_flash.c...
+compiling stm32f1xx_hal_flash_ex.c...
+compiling system_stm32f1xx.c...
+linking...
+Program Size: Code=28744 RO-data=868 RW-data=208 ZI-data=2256  
+FromELF: creating hex file...
+"CLOCK_STM32F103C8\CLOCK_STM32F103C8.axf" - 0 Error(s), 12 Warning(s).
+
+<h2>Software Packages used:</h2>
+
+Package Vendor: ARM
+                http://www.keil.com/pack/ARM.CMSIS.5.6.0.pack
+                ARM.CMSIS.5.6.0
+                CMSIS (Cortex Microcontroller Software Interface Standard)
+   * Component: CORE Version: 5.3.0
+
+Package Vendor: Keil
+                http://www.keil.com/pack/Keil.STM32F1xx_DFP.2.3.0.pack
+                Keil.STM32F1xx_DFP.2.3.0
+                STMicroelectronics STM32F1 Series Device Support, Drivers and Examples
+
+<h2>Collection of Component include folders:</h2>
+  .\RTE\_CLOCK_STM32F103C8
+  C:\Users\Dmytro\AppData\Local\Arm\Packs\ARM\CMSIS\5.6.0\CMSIS\Core\Include
+  C:\Users\Dmytro\AppData\Local\Arm\Packs\Keil\STM32F1xx_DFP\2.3.0\Device\Include
+
+<h2>Collection of Component Files used:</h2>
+
+   * Component: ARM::CMSIS:CORE:5.3.0
+Build Time Elapsed:  00:01:28
+</pre>
+</body>
+</html>
