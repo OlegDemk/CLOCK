@@ -1,11 +1,8 @@
-
 #include "CLOCK_DS3231.h"
 #include "stm32f1xx_hal.h"
 #include "stm32f1xx.h"
 #include "stm32f1xx_it.h"
 #include "main.h"
-
-
 
 extern UART_HandleTypeDef huart1;
 extern I2C_HandleTypeDef hi2c1;
@@ -77,17 +74,14 @@ void read_data_from_DS3231(void)
 					size=sizeof(str);
 					HAL_UART_Transmit(&huart1 , (uint8_t *)str, size, 0xFFF); 
 					
-					
-
 					// TEST HOUR REG
-					uint8_t buffer_hour=0;
-					HAL_I2C_Mem_Read(&hi2c1, ADRESS_DEVCE_DS3231<<1,ADDRES_HOUR_REG, (uint16_t) sizebuf, &buffer_hour, 1, timeout);
-					
-					sprintf(str,"HOUR REG: 0x%x <<<<<<<\r\n",buffer_hour);      // convert   in  str 
-					size=sizeof(str);
-					HAL_UART_Transmit(&huart1 , (uint8_t *)str, size, 0xFFF); 
-			#endif
-  
+//					uint8_t buffer_hour=0;
+//					HAL_I2C_Mem_Read(&hi2c1, ADRESS_DEVCE_DS3231<<1,ADDRES_HOUR_REG, (uint16_t) sizebuf, &buffer_hour, 1, timeout);
+//					
+//					sprintf(str,"HOUR REG: 0x%x <<<<<<<\r\n",buffer_hour);      // convert   in  str 
+//					size=sizeof(str);
+//					HAL_UART_Transmit(&huart1 , (uint8_t *)str, size, 0xFFF); 
+			#endif 
 }
 
 /*//////////////////////////////////////////////////////////////////////////////

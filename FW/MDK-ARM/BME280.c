@@ -52,7 +52,6 @@ void init_BME280(void)
 		uint8_t buf_calibration_data[24]={0};
 		STATUS_BME280=HAL_I2C_Mem_Read(&hi2c1, BME280_ID<<1,(uint16_t)BME280_CALIB_00, (uint16_t) 1, buf_calibration_data, (uint16_t)24, 1000);
 	
-		// New method
 		dig_T1_LSB=buf_calibration_data[0];
 		dig_T1_MSB=(unsigned short)buf_calibration_data[1];
 		dig_T1=dig_T1_MSB<<8|dig_T1_LSB;
@@ -75,18 +74,40 @@ void init_BME280(void)
 		dig_P8=(signed short)buf_calibration_data[21]<<8|(signed short)buf_calibration_data[20];
 		dig_P9=(signed short)buf_calibration_data[23]<<8|(signed short)buf_calibration_data[22];
 		
-//		dig_H1=(unsigned short)buf_calibration_data[24];    ////  25   ?????????
+		// Read H1 from cilibrate register
+		uint8_t buf_calibration_data_H1=0;
+		STATUS_BME280=HAL_I2C_Mem_Read(&hi2c1, BME280_ID<<1,(uint16_t)0xA1, (uint16_t) 1, &buf_calibration_data_H1, (uint16_t)1, 1000);
+		dig_H1=(unsigned short)buf_calibration_data_H1;    
 		
-		STATUS_BME280=HAL_I2C_Mem_Read(&hi2c1, BME280_ID<<1,(uint16_t)BME280_CALIB_26, (uint16_t) 1, buf_calibration_data, (uint16_t)10, 1000);
+		// Read H2 calibration register
+		uint8_t buf_calibration_data_H2[2]={0};
+		STATUS_BME280=HAL_I2C_Mem_Read(&hi2c1, BME280_ID<<1,(uint16_t)0xE1, (uint16_t) 1, buf_calibration_data_H2, (uint16_t)2, 1000);	
+		dig_H2=(signed short)buf_calibration_data_H2[1]<<8|(signed short)buf_calibration_data_H2[0];
 		
-//		dig_H2=(signed short)buf_calibration_data[1]<<8|(signed short)buf_calibration_data[0];
-//		dig_H3=(unsigned short)buf_calibration_data[2];
-//		dig_H4=(signed short)buf_calibration_data[4]<<3|(signed short)buf_calibration_data[5];
-//		dig_H5=(signed short)buf_calibration_data[6]<<11|(signed short)buf_calibration_data[7];
-//		dig_H6=(signed short)buf_calibration_data[8];
+		// Read H3 calibration register
+		unsigned char buf_calibration_data_H3=0;
+		STATUS_BME280=HAL_I2C_Mem_Read(&hi2c1, BME280_ID<<1,(uint16_t)0xE3, (uint16_t) 1, &buf_calibration_data_H3, (uint16_t)1, 1000);	
+		dig_H3=(unsigned char)buf_calibration_data_H3;
 		
+		// Read H4 calibration register
+		uint8_t buf_calibration_data_H4[2]={0};
+		STATUS_BME280=HAL_I2C_Mem_Read(&hi2c1, BME280_ID<<1,(uint16_t)0xE4, (uint16_t) 1, buf_calibration_data_H4, (uint16_t)2, 1000);	
+		dig_H4=(signed short)buf_calibration_data_H4[0]<<3|(0x0F&(signed short)buf_calibration_data_H4[1]);
+		
+		// Read H5 calibration register
+		uint8_t buf_calibration_data_H5[2]={0};
+		STATUS_BME280=HAL_I2C_Mem_Read(&hi2c1, BME280_ID<<1,(uint16_t)0xE5, (uint16_t) 1,buf_calibration_data_H5, (uint16_t)2, 1000);	
+		dig_H5=(signed short)buf_calibration_data[1]<<3|(0xF0&(signed short)buf_calibration_data[0]);
+		
+		// Read H6 calibration register
+		uint8_t buf_calibration_data_H6=0;
+		STATUS_BME280=HAL_I2C_Mem_Read(&hi2c1, BME280_ID<<1,(uint16_t)0xE7, (uint16_t) 1, &buf_calibration_data_H6, (uint16_t)1, 1000);	
+		dig_H6=(signed char)buf_calibration_data_H6;
+		
+		 
 	
-		
+	
+	
 		// Print All callibration data
 		#if DEBUG
 				sprintf(str_BME280,"CALIBRATE DATA====================\r\n");      // convert   in  str 
@@ -127,6 +148,8 @@ void init_BME280(void)
 				sprintf(str7,"END CALIBRATE DATA====================\r\n\r\n");      // convert   in  str 
 				size=sizeof(str7);
 				HAL_UART_Transmit(&huart1 , (uint8_t *)str7, size, 0xFFF); 
+				
+				HAL_Delay(3000);
 		#endif		
 		
 		// 4. Configure BME280 
@@ -289,79 +312,107 @@ uint32_t calulete_humidity(uint32_t adc_H)
 	
 	
 //////////////////////////////////////////////////////////////////
-////////		double humidity;
-////////		double humidity_min = 0.0;
-////////		double humidity_max = 100.0;
-////////		double var1;
-////////		double var2;
-////////		double var3;
-////////		double var4;
-////////		double var5;
-////////		double var6;
+//		double humidity;
+//		double humidity_min = 0.0;
+//		double humidity_max = 100.0;
+//		double var1;
+//		double var2;
+//		double var3;
+//		double var4;
+//		double var5;
+//		double var6;
 
-////////		var1 = ((double)t_fine) - 76800.0;
-////////		var2 = (((double)dig_H4) * 64.0 + (((double)dig_H5) / 16384.0) * var1);
-////////		var3 = humidity - var2;
-////////		var4 = ((double)dig_H2) / 65536.0;
-////////		var5 = (1.0 + (((double)dig_H3) / 67108864.0) * var1);
-////////		var6 = 1.0 + (((double)dig_H6) / 67108864.0) * var1 * var5;
-////////		var6 = var3 * var4 * (var5 * var6);
-////////		humidity = var6 * (1.0 - ((double)dig_H1) * var6 / 524288.0);
+//		var1 = ((double)t_fine) - 76800.0;
+//		var2 = (((double)dig_H4) * 64.0 + (((double)dig_H5) / 16384.0) * var1);
+//		var3 = humidity - var2;
+//		var4 = ((double)dig_H2) / 65536.0;
+//		var5 = (1.0 + (((double)dig_H3) / 67108864.0) * var1);
+//		var6 = 1.0 + (((double)dig_H6) / 67108864.0) * var1 * var5;
+//		var6 = var3 * var4 * (var5 * var6);
+//		humidity = var6 * (1.0 - ((double)dig_H1) * var6 / 524288.0);
 
-////////		if (humidity > humidity_max)
-////////			humidity = humidity_max;
-////////		else if (humidity < humidity_min)
-////////			humidity = humidity_min;
+//		if (humidity > humidity_max)
+//			humidity = humidity_max;
+//		else if (humidity < humidity_min)
+//			humidity = humidity_min;
 
-////////	  sprintf(str_BME280,"HUMIDITY: %d________\r\n", (int)humidity);      // convert   in  str 
-////////		size=sizeof(str_BME280);
-////////		HAL_UART_Transmit(&huart1 , (uint8_t *)str_BME280, size, 0xFFF); 	
-////////	
-////////	return humidity;
+//	  sprintf(str_BME280,"HUMIDITY: %d________\r\n", (int)humidity);      // convert   in  str 
+//		size=sizeof(str_BME280);
+//		HAL_UART_Transmit(&huart1 , (uint8_t *)str_BME280, size, 0xFFF); 	
+//	
+//	return humidity;
 //////////////////////////////////////////////////////////////////		
     //adc_H  29760
 		
 		//adc_H=297600;
 		
 				
-		unsigned char dig_H1=0;
-		signed short dig_H2=0;
-		unsigned char dig_H3=0;
-		signed short dig_H4=0;
-		signed short dig_H5=0;
-		signed char dig_H6=0;
-		
-		uint8_t buf_calibration_data[24]={0};
-		STATUS_BME280=HAL_I2C_Mem_Read(&hi2c1, BME280_ID<<1,(uint16_t)BME280_CALIB_00, (uint16_t) 1, buf_calibration_data, (uint16_t)24, 1000);
-		dig_H1=(unsigned short)buf_calibration_data[25];    ////  25   ?????????
-		
-		STATUS_BME280=HAL_I2C_Mem_Read(&hi2c1, BME280_ID<<1,(uint16_t)BME280_CALIB_26, (uint16_t) 1, buf_calibration_data, (uint16_t)10, 1000);
-		
-		dig_H2=(signed short)buf_calibration_data[1]<<8|(signed short)buf_calibration_data[0];
-		dig_H3=(unsigned char)buf_calibration_data[2];
-		signed short dig_H4_msb=(int16_t)(int8_t)buf_calibration_data[4]*16;
-		signed short dig_H4_lsb=(int16_t)(buf_calibration_data[4] & 0x0F);
-		dig_H4 = dig_H4_msb | dig_H4_lsb;
-		signed short dig_H5_msb = (int16_t)(int8_t)buf_calibration_data[6] * 16;
-	  signed short dig_H5_lsb = (int16_t)(buf_calibration_data[7] >> 4);
-		dig_H5 = dig_H5_msb | dig_H5_lsb;
-		dig_H6=(int8_t)buf_calibration_data[8];
 
+
+		// print transformed calibration data for HUMIDITY
+		char str_print_uart[70]="";
+		sprintf(str_print_uart,"H1: %d, H2: %d, H3: %d\r\n", dig_H1, dig_H2, dig_H3 );      // convert   in  str 
+		size=sizeof(str_print_uart);
+		HAL_UART_Transmit(&huart1 , (uint8_t *)str_print_uart, size, 0xFFF); 
+
+    uint8_t i=0;
+		for (i=0; i<=size; i++)
+		{
+			str_print_uart[i]=0;
+		}
+		
+		sprintf(str_print_uart,"H4: %d, H5: %d, H6: %d\r\n", dig_H4, dig_H5, dig_H6 );      // convert   in  str 
+		size=sizeof(str_print_uart);
+		HAL_UART_Transmit(&huart1 , (uint8_t *)str_print_uart, size, 0xFFF); 		
+		
+
+		// Calculate cumidity
 		double var_H;
 		var_H = (((double)t_fine)-76800.0);
+		// Print var_H
+		for (i=0; i<=size; i++)
+		{
+			str_print_uart[i]=0;
+		}
+		sprintf(str_print_uart,"var_H: %d\r\n", (int)var_H);      // convert   in  str 
+		size=sizeof(str_print_uart);
+		HAL_UART_Transmit(&huart1 , (uint8_t *)str_print_uart, size, 0xFFF); 		
+		
 		var_H = (adc_H-(((double)dig_H4) * 64.0 + ((double)dig_H5) / 16384.0 * var_H)) *
 		(((double)dig_H2) / 65536.0 * (1.0 + ((double)dig_H6) / 67108864.0 * var_H *
 		(1.0 + ((double)dig_H3) / 67108864.0 * var_H)));
+		
+		// Print var_H
+		for (i=0; i<=size; i++)
+		{
+			str_print_uart[i]=0;
+		}
+		sprintf(str_print_uart,"var_H: %d\r\n", (int)var_H);      // convert   in  str 
+		size=sizeof(str_print_uart);
+		HAL_UART_Transmit(&huart1 , (uint8_t *)str_print_uart, size, 0xFFF); 	
+		
+		
 		var_H = var_H * (1.0-((double)dig_H1) * var_H / 524288.0);
+		
+		// Print var_H
+		for (i=0; i<=size; i++)
+		{
+			str_print_uart[i]=0;
+		}
+		sprintf(str_print_uart,"var_H: %d\r\n", (int)var_H);      // convert   in  str 
+		size=sizeof(str_print_uart);
+		HAL_UART_Transmit(&huart1 , (uint8_t *)str_print_uart, size, 0xFFF); 	
+		
 		if (var_H > 100.0)
 			var_H = 100.0;
 		else if (var_H < 0.0)
 			var_H = 0.0;
 		
-		sprintf(str_BME280,"HUMIDITY: %d________\r\n", (int)var_H);      // convert   in  str 
+		sprintf(str_BME280,"HUMIDITY: %d\r\n", (int)var_H);      // convert   in  str 
 		size=sizeof(str_BME280);
 		HAL_UART_Transmit(&huart1 , (uint8_t *)str_BME280, size, 0xFFF); 	
 		
+	
 		return var_H;
 
 
@@ -384,8 +435,6 @@ uint32_t calulete_humidity(uint32_t adc_H)
 //			return buf;
 //////////////////////////////////////////////////////////////////		
 		
-		
-
 }
 
 

@@ -33,6 +33,7 @@ extern I2C_HandleTypeDef hi2c1;
 // Calibrate registers
 #define BME280_CALIB_00				0x88
 #define BME280_CALIB_25				0xA1
+#define BME280_CALIB_dig_H1   0xA1
 
 ////////////////////////////////////////////////////////
 
@@ -60,12 +61,12 @@ signed short dig_P7=0;
 signed short dig_P8=0;
 signed short dig_P9=0;
 
-//unsigned short dig_H1=0;
-//signed short dig_H2=0;
-//unsigned short dig_H3=0;
-//signed short dig_H4=0;
-//signed short dig_H5=0;
-//signed short dig_H6=0;
+unsigned short dig_H1=0;
+signed short dig_H2=0;
+unsigned char dig_H3=0;
+signed short dig_H4=0;
+signed short dig_H5=0;
+signed char dig_H6=0;
 
 
 

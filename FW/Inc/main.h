@@ -47,7 +47,7 @@
 // SELECT WORKING MODE	
 #define DEBUG_OFF             0
 #define DEBUG_ON							1
-#define DEBUG 								DEBUG_OFF
+#define DEBUG 								DEBUG_ON
 
 
 /* USER CODE END Includes */

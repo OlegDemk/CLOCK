@@ -191,10 +191,6 @@ void DHT22_test(void);
 void port_init(void);
 uint8_t DHD22_init(void);
 uint8_t DHD22_GetData(void);
-/* USER CODE END PFP */
-
-/* USER CODE BEGIN 0 */
-/* USER CODE END 0 */
 
 /**
   * @brief  The application entry point.
@@ -203,23 +199,8 @@ uint8_t DHD22_GetData(void);
   */
 int main(void)
 {
-  /* USER CODE BEGIN 1 */
-  /* USER CODE END 1 */
-
-  /* MCU Configuration----------------------------------------------------------*/
-
-  /* Reset of all peripherals, Initializes the Flash interface and the Systick. */
   HAL_Init();
-
-  /* USER CODE BEGIN Init */
-  /* USER CODE END Init */
-
-  /* Configure the system clock */
   SystemClock_Config();
-
-  /* USER CODE BEGIN SysInit */
-
-  /* USER CODE END SysInit */
 
   /* Initialize all configured peripherals */
   MX_GPIO_Init();
@@ -228,6 +209,7 @@ int main(void)
   MX_SPI1_Init();
   MX_TIM2_Init();
   MX_SPI2_Init();
+	//NRF24_ini();
   /* USER CODE BEGIN 2 */
   //init_DS3231(11, 11, 11, 1, 11, 11);
 
@@ -238,11 +220,6 @@ int main(void)
 	//HAL_TIM_Base_Init(&htim2);
   /* USER CODE END 2 */
 
-  /* Infinite loop */
-  /* USER CODE BEGIN WHILE */
-	
-	NRF24_ini();
-		
 	HAL_TIM_Base_Start_IT(&htim2);
 	//start_init_DS3231();
 	init_LCD_ILI9341();
@@ -253,7 +230,7 @@ int main(void)
 	
   while (1)
   {	 	
-		  NRF24_receive_data_from_oudor();     //test read data from module
+		  //NRF24_receive_data_from_oudor();     //test read data from module
 		  //DHT22_test();
 			HAL_Delay(950);
 			read_data_BME280();
@@ -319,14 +296,8 @@ int main(void)
 											print_data_on_LCD(optimization_OFF);
 								}			  
 				}
-	}			
-			
-  /* USER CODE END WHILE */
-
-  /* USER CODE BEGIN 3 */
+	}			 
   }
-  /* USER CODE END 3 */
-
 }
 
 /**
