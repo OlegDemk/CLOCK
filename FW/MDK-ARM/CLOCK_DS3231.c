@@ -10,7 +10,7 @@ extern I2C_HandleTypeDef hi2c1;
 extern float T_outdoor;
 extern uint16_t H_outdoor;
 extern float T_indoor;
-extern uint16_t H_indoor;
+extern float H_indoor;
 extern uint32_t P;
 
 /*//////////////////////////////////////////////////////////////////////////////
@@ -831,9 +831,6 @@ void init_LCD_ILI9341(void)
 		ILI9341_Init();    // Init LCD.
 	  ILI9341_Set_Rotation(SCREEN_HORIZONTAL_2);				
 		ILI9341_Fill_Screen(BLACK);
-
-	  sprintf(str_LCD,"OUTDOOR");
-		ILI9341_Draw_Text(str_LCD, 160, 160, BLUE,2, BLACK);
 	  
 	  sprintf(str_LCD,"T:");
 		ILI9341_Draw_Text(str_LCD, 7, 183, BLUE,3, BLACK);
@@ -846,15 +843,15 @@ void init_LCD_ILI9341(void)
 	  
 	  // Draw grafity
 		ILI9341_Draw_Rectangle(0, 151, 143, 3, BLUE);  // First line  
-	  ILI9341_Draw_Rectangle(0, 180, 248, 3, BLUE);   //  Second line
-	  ILI9341_Draw_Rectangle(0, 210, 248, 3, BLUE);   //  Third line
-	  ILI9341_Draw_Rectangle(0, 237, 248, 3, BLUE);   // 
+	  ILI9341_Draw_Rectangle(0, 180, 143, 3, BLUE);   //  Second line
+	  ILI9341_Draw_Rectangle(0, 210, 143, 3, BLUE);   //  Third line
+	  ILI9341_Draw_Rectangle(0, 237, 143, 3, BLUE);   // 
 		
 		// Draw line
 		ILI9341_Draw_Rectangle(0, 151, 3, 90, BLUE);
 		ILI9341_Draw_Rectangle(35, 151, 3, 90, BLUE);
 		ILI9341_Draw_Rectangle(140, 151, 3, 90, BLUE);
-		ILI9341_Draw_Rectangle(245, 180, 3, 60, BLUE);
+		//ILI9341_Draw_Rectangle(245, 180, 3, 60, BLUE);
 }
 
 void print_data_on_LCD(int optimization)
@@ -1072,7 +1069,7 @@ void print_MEMS_in_LCD(void)
 		sprintf(str,"%.1f",T_indoor);
 		ILI9341_Draw_Text(str, 60, 183, BLUE,3, BLACK);
 	  // Print indoor preasure
-	  sprintf(str,"%d",H_indoor);
+	  sprintf(str,"%.1f",H_indoor);
 		ILI9341_Draw_Text(str,60, 213, BLUE,3, BLACK);
 	  // Draw preasure plase
 		sprintf(str_LCD,"%d",P);

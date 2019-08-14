@@ -71,7 +71,7 @@ float T_outdoor=0;
 uint16_t H_outdoor=100;
 // Indoor sensor
 float T_indoor=-55;
-uint16_t H_indoor=100;
+float H_indoor=100;
 uint32_t P=999;
 //------------------------------------------------------------------------
 

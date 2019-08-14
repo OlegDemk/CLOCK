@@ -46,9 +46,12 @@ extern uint8_t size;
 //////
 
 // Variable for read T, H and P DATA
-unsigned short dig_T1_LSB=0, dig_T1_MSB=0, dig_T1=0;
-short dig_T2_LSB=0, dig_T2_MSB=0, dig_T2=0;
-short dig_T3_LSB=0, dig_T3_MSB=0, dig_T3=0;
+unsigned short dig_T1_LSB=0, dig_T1_MSB=0;
+unsigned short dig_T1=0;
+signed short dig_T2_LSB=0, dig_T2_MSB=0;
+signed short dig_T2=0;
+signed short dig_T3_LSB=0, dig_T3_MSB=0;
+signed short dig_T3=0;
 
 // Variable for read calibrate data
 unsigned short dig_P1=0;
@@ -61,12 +64,15 @@ signed short dig_P7=0;
 signed short dig_P8=0;
 signed short dig_P9=0;
 
-unsigned short dig_H1=0;
+unsigned char dig_H1=0;
 signed short dig_H2=0;
 unsigned char dig_H3=0;
 signed short dig_H4=0;
 signed short dig_H5=0;
 signed char dig_H6=0;
+
+// Wariabble for temperature
+int32_t t_fine=0;
 
 
 
