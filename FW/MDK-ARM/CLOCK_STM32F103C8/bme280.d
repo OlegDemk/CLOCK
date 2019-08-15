@@ -30,3 +30,6 @@ clock_stm32f103c8\bme280.o: ../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_ti
 clock_stm32f103c8\bme280.o: ../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_tim_ex.h
 clock_stm32f103c8\bme280.o: ../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_uart.h
 clock_stm32f103c8\bme280.o: ../Inc/stm32f1xx_it.h
+clock_stm32f103c8\bme280.o: C:\Keil_v5\ARM\ARMCC\Bin\..\include\string.h
+clock_stm32f103c8\bme280.o: ..\Src\ILI9341\ILI9341_STM32_Driver.h
+clock_stm32f103c8\bme280.o: ..\Src\ILI9341\ILI9341_GFX.h

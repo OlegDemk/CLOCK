@@ -46,34 +46,43 @@ extern uint8_t size;
 //////
 
 // Variable for read T, H and P DATA
-unsigned short dig_T1_LSB=0, dig_T1_MSB=0;
-unsigned short dig_T1=0;
-signed short dig_T2_LSB=0, dig_T2_MSB=0;
-signed short dig_T2=0;
-signed short dig_T3_LSB=0, dig_T3_MSB=0;
-signed short dig_T3=0;
-
-// Variable for read calibrate data
-unsigned short dig_P1=0;
-signed short dig_P2=0;
-signed short dig_P3=0;
-signed short dig_P4=0;
-signed short dig_P5=0;
-signed short dig_P6=0;
-signed short dig_P7=0;
-signed short dig_P8=0;
-signed short dig_P9=0;
-
-unsigned char dig_H1=0;
-signed short dig_H2=0;
-unsigned char dig_H3=0;
-signed short dig_H4=0;
-signed short dig_H5=0;
-signed char dig_H6=0;
+typedef int32_t BME280_S32_t;
+typedef uint32_t BME280_U32_t;
+typedef int64_t BME280_S64_t;
+ 
+// dig T
+uint16_t dig_T1;
+int16_t dig_T2;
+int16_t dig_T3;
+ 
+// dig P
+uint16_t dig_P1;
+int16_t dig_P2;
+int16_t dig_P3;
+int16_t dig_P4;
+int16_t dig_P5;
+int16_t dig_P6;
+int16_t dig_P7;
+int16_t dig_P8;
+int16_t dig_P9;
+ 
+// dig H1
+uint8_t dig_H1;
+int16_t dig_H2;
+uint8_t dig_H3;
+int16_t dig_H4;
+int16_t dig_H5;
+int8_t dig_H6;
 
 // Wariabble for temperature
-int32_t t_fine=0;
+BME280_S32_t t_fine;
 
+int t=0;
+int p=0;
+int h=0;
+
+BME280_S32_t adc_T, adc_P, adc_H;
+uint8_t ALL_REGISTERS[255];
 
 
 //float cTemp=0;

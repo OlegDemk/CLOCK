@@ -9,8 +9,8 @@ extern I2C_HandleTypeDef hi2c1;
 
 extern float T_outdoor;
 extern uint16_t H_outdoor;
-extern float T_indoor;
-extern float H_indoor;
+extern uint16_t T_indoor;
+extern uint16_t H_indoor;
 extern uint32_t P;
 
 /*//////////////////////////////////////////////////////////////////////////////
@@ -832,26 +832,26 @@ void init_LCD_ILI9341(void)
 	  ILI9341_Set_Rotation(SCREEN_HORIZONTAL_2);				
 		ILI9341_Fill_Screen(BLACK);
 	  
-	  sprintf(str_LCD,"T:");
-		ILI9341_Draw_Text(str_LCD, 7, 183, BLUE,3, BLACK);
-	
-	  sprintf(str_LCD,"H:");
-		ILI9341_Draw_Text(str_LCD, 7, 213, BLUE,3, BLACK);
+//	   sprintf(str_LCD,"T:");
+//		ILI9341_Draw_Text(str_LCD, 20, 183, BLUE,3, BLACK);
+//	
+//	  sprintf(str_LCD,"H:");
+//		ILI9341_Draw_Text(str_LCD, 20, 213, BLUE,3, BLACK);
+//	  
+//	  sprintf(str_LCD,"P:");
+//		ILI9341_Draw_Text(str_LCD, 2, 154, BLUE,3, BLACK);
 	  
-	  sprintf(str_LCD,"P:");
-		ILI9341_Draw_Text(str_LCD, 7, 154, BLUE,3, BLACK);
-	  
-	  // Draw grafity
-		ILI9341_Draw_Rectangle(0, 151, 143, 3, BLUE);  // First line  
-	  ILI9341_Draw_Rectangle(0, 180, 143, 3, BLUE);   //  Second line
-	  ILI9341_Draw_Rectangle(0, 210, 143, 3, BLUE);   //  Third line
-	  ILI9341_Draw_Rectangle(0, 237, 143, 3, BLUE);   // 
-		
-		// Draw line
-		ILI9341_Draw_Rectangle(0, 151, 3, 90, BLUE);
-		ILI9341_Draw_Rectangle(35, 151, 3, 90, BLUE);
-		ILI9341_Draw_Rectangle(140, 151, 3, 90, BLUE);
-		//ILI9341_Draw_Rectangle(245, 180, 3, 60, BLUE);
+//	  // Draw horisontal line
+		ILI9341_Draw_Rectangle(0, 151, 320, 3, BLUE);  // First line  
+//	  ILI9341_Draw_Rectangle(10, 180, 170, 3, BLUE);   //  Second line
+//	  ILI9341_Draw_Rectangle(10, 210, 170, 3, BLUE);   //  Third line
+//	  ILI9341_Draw_Rectangle(10, 237, 170, 3, BLUE);   // 
+//		
+//		// Draw vertical line
+//		ILI9341_Draw_Rectangle(10, 151, 3, 90, BLUE);
+//		//ILI9341_Draw_Rectangle(55, 151, 3, 90, BLUE);
+//		ILI9341_Draw_Rectangle(170, 151, 3, 90, BLUE);
+//		//ILI9341_Draw_Rectangle(245, 180, 3, 60, BLUE);
 }
 
 void print_data_on_LCD(int optimization)
@@ -1064,37 +1064,65 @@ void print_year_in_LCD(void)
 void print_MEMS_in_LCD(void)
 {
 		char str[10]="";
+		// Claar zone
+	
+	
 		// Print indoor temperature //--------------------------------------------
 	  //T_indoor=-99;
-		sprintf(str,"%.1f",T_indoor);
-		ILI9341_Draw_Text(str, 60, 183, BLUE,3, BLACK);
+		sprintf(str,"T:%d C",T_indoor);
+	  if((T_indoor>=18)&(T_indoor<=25))
+		{
+				ILI9341_Draw_Text(str, 10, 183, GREEN,3, BLACK); 
+		}
+		else if(T_indoor>25)
+		{
+				ILI9341_Draw_Text(str, 10, 183, RED,3, BLACK); 
+		}
+		else if(T_indoor<18)
+	  {
+				ILI9341_Draw_Text(str, 10, 183, BLUE,3, BLACK); 
+		}
+	
+	
 	  // Print indoor preasure
-	  sprintf(str,"%.1f",H_indoor);
-		ILI9341_Draw_Text(str,60, 213, BLUE,3, BLACK);
+		sprintf(str,"H:%d %%",H_indoor);
+		if((H_indoor>=30)&(H_indoor<=65))
+		{
+				ILI9341_Draw_Text(str,10, 213, GREEN,3, BLACK); 
+		}
+		else if(H_indoor>65)
+		{
+				ILI9341_Draw_Text(str,10, 213, RED,3, BLACK); 
+		}
+		else if(H_indoor<30)
+	  {
+				ILI9341_Draw_Text(str,10, 213, BLUE,3, BLACK); 
+		}
+		
 	  // Draw preasure plase
-		sprintf(str_LCD,"%d",P);
-		ILI9341_Draw_Text(str_LCD, 60, 154, BLUE,3, BLACK); 
+		sprintf(str_LCD,"P:%d mmHg",P);
+		ILI9341_Draw_Text(str_LCD, 10, 154, BLUE,3, BLACK); 
 
-		// Print outdor temperature  //--------------------------------------------
-	  if(STATUS_CONNECTION_TO_OUTDOR==0) // If no connection
-		{   
-			  // Nead clear Clear 
-				sprintf(str,"    ");
-			  ILI9341_Draw_Text(str, 155, 184, BLUE,3, BLACK);
-				
-				// Print outdor humidyty 
-				sprintf(str,"    ");
-			  ILI9341_Draw_Text(str, 165, 213, BLUE,3, BLACK);
-				
-		}
-		else{
-				//T_outdoor=-99;
-				sprintf(str,"%.1f",T_outdoor);
-				ILI9341_Draw_Text(str, 155, 184, BLUE,3, BLACK);
-				// Print outdor humidyty 
-				sprintf(str,"%d%%",H_outdoor);
-				ILI9341_Draw_Text(str, 165, 213, BLUE,3, BLACK);
-		}
+//		// Print outdor temperature  //--------------------------------------------
+//	  if(STATUS_CONNECTION_TO_OUTDOR==0) // If no connection
+//		{   
+//			  // Nead clear Clear 
+//				sprintf(str,"    ");
+//			  ILI9341_Draw_Text(str, 155, 184, BLUE,3, BLACK);
+//				
+//				// Print outdor humidyty 
+//				sprintf(str,"    ");
+//			  ILI9341_Draw_Text(str, 165, 213, BLUE,3, BLACK);
+//				
+//		}
+//		else{
+//				//T_outdoor=-99;
+//				sprintf(str,"%.1f",T_outdoor);
+//				ILI9341_Draw_Text(str, 155, 184, BLUE,3, BLACK);
+//				// Print outdor humidyty 
+//				sprintf(str,"%d%%",H_outdoor);
+//				ILI9341_Draw_Text(str, 165, 213, BLUE,3, BLACK);
+//		}
 	  
 		
 }

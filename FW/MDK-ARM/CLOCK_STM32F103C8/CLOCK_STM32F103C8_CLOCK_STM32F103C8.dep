@@ -30,7 +30,7 @@ I (../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_spi.h)(0x5C10E7C5)
 I (../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_tim.h)(0x5C10E7C5)
 I (../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_tim_ex.h)(0x5C10E7C5)
 I (../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_uart.h)(0x5C10E7C5)
-F (.\CLOCK_DS3231.c)(0x5D4F070A)(--c99 -c --cpu Cortex-M3 -D__EVAL -D__MICROLIB -g -O1 --apcs=interwork --split_sections -I ../Inc -I ../Drivers/STM32F1xx_HAL_Driver/Inc -I ../Drivers/STM32F1xx_HAL_Driver/Inc/Legacy -I ../Drivers/CMSIS/Device/ST/STM32F1xx/Include -I ../Drivers/CMSIS/Include -I ..\Inc -I ..\Src -I ..\Src\ILI9341-I.\RTE\_CLOCK_STM32F103C8-IC:\Users\Dmytro\AppData\Local\Arm\Packs\ARM\CMSIS\5.6.0\CMSIS\Core\Include-IC:\Users\Dmytro\AppData\Local\Arm\Packs\Keil\STM32F1xx_DFP\2.3.0\Device\Include-D__UVISION_VERSION="528" -D_RTE_ -DSTM32F10X_MD -DUSE_HAL_DRIVER -DSTM32F103xB-o clock_stm32f103c8\clock_ds3231.o --omf_browse clock_stm32f103c8\clock_ds3231.crf --depend clock_stm32f103c8\clock_ds3231.d)
+F (.\CLOCK_DS3231.c)(0x5D55227E)(--c99 -c --cpu Cortex-M3 -D__EVAL -D__MICROLIB -g -O1 --apcs=interwork --split_sections -I ../Inc -I ../Drivers/STM32F1xx_HAL_Driver/Inc -I ../Drivers/STM32F1xx_HAL_Driver/Inc/Legacy -I ../Drivers/CMSIS/Device/ST/STM32F1xx/Include -I ../Drivers/CMSIS/Include -I ..\Inc -I ..\Src -I ..\Src\ILI9341-I.\RTE\_CLOCK_STM32F103C8-IC:\Users\Dmytro\AppData\Local\Arm\Packs\ARM\CMSIS\5.6.0\CMSIS\Core\Include-IC:\Users\Dmytro\AppData\Local\Arm\Packs\Keil\STM32F1xx_DFP\2.3.0\Device\Include-D__UVISION_VERSION="528" -D_RTE_ -DSTM32F10X_MD -DUSE_HAL_DRIVER -DSTM32F103xB-o clock_stm32f103c8\clock_ds3231.o --omf_browse clock_stm32f103c8\clock_ds3231.crf --depend clock_stm32f103c8\clock_ds3231.d)
 I (CLOCK_DS3231.h)(0x5C627785)
 I (../Inc/main.h)(0x5D4BEC3F)
 I (../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal.h)(0x5C10E7C5)
@@ -126,8 +126,8 @@ I (../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_tim_ex.h)(0x5C10E7C5)
 I (../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_uart.h)(0x5C10E7C5)
 I (..\Src\ILI9341\ILI9341_GFX.h)(0x5C476487)
 I (..\Src\ILI9341\5x5_font.h)(0x5C476487)
-F (.\BME280.c)(0x5D53F071)(--c99 -c --cpu Cortex-M3 -D__EVAL -D__MICROLIB -g -O1 --apcs=interwork --split_sections -I ../Inc -I ../Drivers/STM32F1xx_HAL_Driver/Inc -I ../Drivers/STM32F1xx_HAL_Driver/Inc/Legacy -I ../Drivers/CMSIS/Device/ST/STM32F1xx/Include -I ../Drivers/CMSIS/Include -I ..\Inc -I ..\Src -I ..\Src\ILI9341-I.\RTE\_CLOCK_STM32F103C8-IC:\Users\Dmytro\AppData\Local\Arm\Packs\ARM\CMSIS\5.6.0\CMSIS\Core\Include-IC:\Users\Dmytro\AppData\Local\Arm\Packs\Keil\STM32F1xx_DFP\2.3.0\Device\Include-D__UVISION_VERSION="528" -D_RTE_ -DSTM32F10X_MD -DUSE_HAL_DRIVER -DSTM32F103xB-o clock_stm32f103c8\bme280.o --omf_browse clock_stm32f103c8\bme280.crf --depend clock_stm32f103c8\bme280.d)
-I (BME280.h)(0x5D51CB04)
+F (.\BME280.c)(0x5D551B77)(--c99 -c --cpu Cortex-M3 -D__EVAL -D__MICROLIB -g -O1 --apcs=interwork --split_sections -I ../Inc -I ../Drivers/STM32F1xx_HAL_Driver/Inc -I ../Drivers/STM32F1xx_HAL_Driver/Inc/Legacy -I ../Drivers/CMSIS/Device/ST/STM32F1xx/Include -I ../Drivers/CMSIS/Include -I ..\Inc -I ..\Src -I ..\Src\ILI9341-I.\RTE\_CLOCK_STM32F103C8-IC:\Users\Dmytro\AppData\Local\Arm\Packs\ARM\CMSIS\5.6.0\CMSIS\Core\Include-IC:\Users\Dmytro\AppData\Local\Arm\Packs\Keil\STM32F1xx_DFP\2.3.0\Device\Include-D__UVISION_VERSION="528" -D_RTE_ -DSTM32F10X_MD -DUSE_HAL_DRIVER -DSTM32F103xB-o clock_stm32f103c8\bme280.o --omf_browse clock_stm32f103c8\bme280.crf --depend clock_stm32f103c8\bme280.d)
+I (BME280.h)(0x5D546275)
 I (../Inc/main.h)(0x5D4BEC3F)
 I (../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal.h)(0x5C10E7C5)
 I (../Inc/stm32f1xx_hal_conf.h)(0x5C601132)
@@ -157,7 +157,10 @@ I (../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_tim.h)(0x5C10E7C5)
 I (../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_tim_ex.h)(0x5C10E7C5)
 I (../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_uart.h)(0x5C10E7C5)
 I (../Inc/stm32f1xx_it.h)(0x5C601131)
-F (.\BME280.h)(0x5D51CB04)()
+I (C:\Keil_v5\ARM\ARMCC\include\string.h)(0x5CEBC032)
+I (..\Src\ILI9341\ILI9341_STM32_Driver.h)(0x5C51EEB9)
+I (..\Src\ILI9341\ILI9341_GFX.h)(0x5C476487)
+F (.\BME280.h)(0x5D546275)()
 F (..\Src\NRF24.c)(0x5C6276B8)(--c99 -c --cpu Cortex-M3 -D__EVAL -D__MICROLIB -g -O1 --apcs=interwork --split_sections -I ../Inc -I ../Drivers/STM32F1xx_HAL_Driver/Inc -I ../Drivers/STM32F1xx_HAL_Driver/Inc/Legacy -I ../Drivers/CMSIS/Device/ST/STM32F1xx/Include -I ../Drivers/CMSIS/Include -I ..\Inc -I ..\Src -I ..\Src\ILI9341-I.\RTE\_CLOCK_STM32F103C8-IC:\Users\Dmytro\AppData\Local\Arm\Packs\ARM\CMSIS\5.6.0\CMSIS\Core\Include-IC:\Users\Dmytro\AppData\Local\Arm\Packs\Keil\STM32F1xx_DFP\2.3.0\Device\Include-D__UVISION_VERSION="528" -D_RTE_ -DSTM32F10X_MD -DUSE_HAL_DRIVER -DSTM32F103xB-o clock_stm32f103c8\nrf24.o --omf_browse clock_stm32f103c8\nrf24.crf --depend clock_stm32f103c8\nrf24.d)
 I (../Inc/NRF24.h)(0x5C50B082)
 I (../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal.h)(0x5C10E7C5)
@@ -221,7 +224,7 @@ I (../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_tim_ex.h)(0x5C10E7C5)
 I (../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_uart.h)(0x5C10E7C5)
 I (C:\Keil_v5\ARM\ARMCC\include\string.h)(0x5CEBC032)
 I (C:\Keil_v5\ARM\ARMCC\include\stdlib.h)(0x5CEBC032)
-F (../Src/main.c)(0x5D4F0665)(--c99 -c --cpu Cortex-M3 -D__EVAL -D__MICROLIB -g -O1 --apcs=interwork --split_sections -I ../Inc -I ../Drivers/STM32F1xx_HAL_Driver/Inc -I ../Drivers/STM32F1xx_HAL_Driver/Inc/Legacy -I ../Drivers/CMSIS/Device/ST/STM32F1xx/Include -I ../Drivers/CMSIS/Include -I ..\Inc -I ..\Src -I ..\Src\ILI9341-I.\RTE\_CLOCK_STM32F103C8-IC:\Users\Dmytro\AppData\Local\Arm\Packs\ARM\CMSIS\5.6.0\CMSIS\Core\Include-IC:\Users\Dmytro\AppData\Local\Arm\Packs\Keil\STM32F1xx_DFP\2.3.0\Device\Include-D__UVISION_VERSION="528" -D_RTE_ -DSTM32F10X_MD -DUSE_HAL_DRIVER -DSTM32F103xB-o clock_stm32f103c8\main.o --omf_browse clock_stm32f103c8\main.crf --depend clock_stm32f103c8\main.d)
+F (../Src/main.c)(0x5D5511A7)(--c99 -c --cpu Cortex-M3 -D__EVAL -D__MICROLIB -g -O1 --apcs=interwork --split_sections -I ../Inc -I ../Drivers/STM32F1xx_HAL_Driver/Inc -I ../Drivers/STM32F1xx_HAL_Driver/Inc/Legacy -I ../Drivers/CMSIS/Device/ST/STM32F1xx/Include -I ../Drivers/CMSIS/Include -I ..\Inc -I ..\Src -I ..\Src\ILI9341-I.\RTE\_CLOCK_STM32F103C8-IC:\Users\Dmytro\AppData\Local\Arm\Packs\ARM\CMSIS\5.6.0\CMSIS\Core\Include-IC:\Users\Dmytro\AppData\Local\Arm\Packs\Keil\STM32F1xx_DFP\2.3.0\Device\Include-D__UVISION_VERSION="528" -D_RTE_ -DSTM32F10X_MD -DUSE_HAL_DRIVER -DSTM32F103xB-o clock_stm32f103c8\main.o --omf_browse clock_stm32f103c8\main.crf --depend clock_stm32f103c8\main.d)
 I (../Inc/main.h)(0x5D4BEC3F)
 I (../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal.h)(0x5C10E7C5)
 I (../Inc/stm32f1xx_hal_conf.h)(0x5C601132)

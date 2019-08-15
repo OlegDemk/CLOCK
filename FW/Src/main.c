@@ -70,9 +70,9 @@ UART_HandleTypeDef huart1;
 float T_outdoor=0;
 uint16_t H_outdoor=100;
 // Indoor sensor
-float T_indoor=-55;
-float H_indoor=100;
-uint32_t P=999;
+int16_t T_indoor=0;
+uint16_t H_indoor=0;
+uint32_t P=0;
 //------------------------------------------------------------------------
 
 // Variabble for NRF------------------------------------------------------
