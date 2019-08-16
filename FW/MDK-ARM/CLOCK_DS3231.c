@@ -1063,12 +1063,15 @@ void print_year_in_LCD(void)
 
 void print_MEMS_in_LCD(void)
 {
-		char str[10]="";
+		char str[20]="";
 		// Claar zone
+	  sprintf(str,"               ");
+	  ILI9341_Draw_Text(str, 10, 183, GREEN,3, BLACK); 
+	  ILI9341_Draw_Text(str,10, 213, GREEN,3, BLACK); 
+		ILI9341_Draw_Text(str_LCD, 10, 154, BLUE,3, BLACK);
 	
 	
-		// Print indoor temperature //--------------------------------------------
-	  //T_indoor=-99;
+	  // Print Temperature on LCD;
 		sprintf(str,"T:%d C",T_indoor);
 	  if((T_indoor>=18)&(T_indoor<=25))
 		{
@@ -1083,8 +1086,7 @@ void print_MEMS_in_LCD(void)
 				ILI9341_Draw_Text(str, 10, 183, BLUE,3, BLACK); 
 		}
 	
-	
-	  // Print indoor preasure
+	  // Print humidity  on LCD
 		sprintf(str,"H:%d %%",H_indoor);
 		if((H_indoor>=30)&(H_indoor<=65))
 		{
@@ -1102,28 +1104,6 @@ void print_MEMS_in_LCD(void)
 	  // Draw preasure plase
 		sprintf(str_LCD,"P:%d mmHg",P);
 		ILI9341_Draw_Text(str_LCD, 10, 154, BLUE,3, BLACK); 
-
-//		// Print outdor temperature  //--------------------------------------------
-//	  if(STATUS_CONNECTION_TO_OUTDOR==0) // If no connection
-//		{   
-//			  // Nead clear Clear 
-//				sprintf(str,"    ");
-//			  ILI9341_Draw_Text(str, 155, 184, BLUE,3, BLACK);
-//				
-//				// Print outdor humidyty 
-//				sprintf(str,"    ");
-//			  ILI9341_Draw_Text(str, 165, 213, BLUE,3, BLACK);
-//				
-//		}
-//		else{
-//				//T_outdoor=-99;
-//				sprintf(str,"%.1f",T_outdoor);
-//				ILI9341_Draw_Text(str, 155, 184, BLUE,3, BLACK);
-//				// Print outdor humidyty 
-//				sprintf(str,"%d%%",H_outdoor);
-//				ILI9341_Draw_Text(str, 165, 213, BLUE,3, BLACK);
-//		}
-	  
 		
 }
 

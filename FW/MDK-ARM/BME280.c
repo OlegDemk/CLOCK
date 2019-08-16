@@ -13,11 +13,9 @@ extern int16_t T_indoor;
 extern uint32_t P;
 extern uint16_t H_indoor;
 
-
 BME280_S32_t BME280_compensate_T_int32(BME280_S32_t adc_T);
 BME280_U32_t BME280_compensate_P_int64(BME280_S32_t adc_P);
 BME280_U32_t bme280_compensate_H_int32(BME280_S32_t adc_H);
-
 
 void init_BME280(void)
 {
@@ -53,14 +51,11 @@ void init_BME280(void)
 		#endif
 			
 		
-
-		
 		// Read all registers like massive
 		memset(ALL_REGISTERS, 0, sizeof(ALL_REGISTERS));
 		STATUS_BME280=HAL_I2C_Mem_Read(&hi2c1, BME280_ID<<1,(uint16_t)0x00, (uint16_t) 1, ALL_REGISTERS, (uint16_t)255, 1000);
-		  	
-	
- 
+		
+		// Save calibration registers
     dig_T1 = ((uint16_t)ALL_REGISTERS[0x88]) | (((uint16_t)ALL_REGISTERS[0x89]) << 8);
     dig_T2 = ((int16_t)ALL_REGISTERS[0x8a]) | (((int16_t)ALL_REGISTERS[0x8b]) << 8);
     dig_T3 = ((int16_t)ALL_REGISTERS[0x8c]) | (((int16_t)ALL_REGISTERS[0x8d]) << 8);
@@ -75,7 +70,6 @@ void init_BME280(void)
     dig_P8 = ((int16_t)ALL_REGISTERS[0x9c]) | (((int16_t)ALL_REGISTERS[0x9d]) << 8);
     dig_P9 = ((int16_t)ALL_REGISTERS[0x9e]) | (((int16_t)ALL_REGISTERS[0x9f]) << 8);
  
- 
     dig_H1 = ALL_REGISTERS[0xa1];
     dig_H2 = ((int16_t)ALL_REGISTERS[0xe1]) | (((int16_t)ALL_REGISTERS[0xe2]) << 8);
     dig_H3 = ALL_REGISTERS[0xe3];
@@ -83,7 +77,7 @@ void init_BME280(void)
     dig_H5 = ((((int16_t)ALL_REGISTERS[0xe5]) & 0xf0 ) >> 4) | (((int16_t)ALL_REGISTERS[0xe6]) << 4);
     dig_H6 = (int8_t)ALL_REGISTERS[0xe7];
  	
-		// 4. Configure BME280 
+		// Configure BME280 
 		// 1. Configure BME280_CONFIG register
 		uint8_t CONFIG_DATA=0x20;  //0x20;  // 0x88;
 		uint8_t BME280_CONFIG_DATA_FROM=0;

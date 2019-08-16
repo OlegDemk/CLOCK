@@ -201,8 +201,6 @@ int main(void)
 {
   HAL_Init();
   SystemClock_Config();
-
-  /* Initialize all configured peripherals */
   MX_GPIO_Init();
   MX_USART1_UART_Init();
   MX_I2C1_Init();
@@ -210,15 +208,12 @@ int main(void)
   MX_TIM2_Init();
   MX_SPI2_Init();
 	//NRF24_ini();
-  /* USER CODE BEGIN 2 */
   //init_DS3231(11, 11, 11, 1, 11, 11);
 
-	
 	//HAL_Delay(3000);
 	//I2C_scaner();
 	//HAL_Delay(3000);
 	//HAL_TIM_Base_Init(&htim2);
-  /* USER CODE END 2 */
 
 	HAL_TIM_Base_Start_IT(&htim2);
 	//start_init_DS3231();
@@ -230,7 +225,7 @@ int main(void)
 	
   while (1)
   {	 	
-		  //NRF24_receive_data_from_oudor();     //test read data from module
+		  //NRF24_receive_data_from_oudor();    								//test read data from module
 		  //DHT22_test();
 			HAL_Delay(950);
 			read_data_BME280();
@@ -238,10 +233,10 @@ int main(void)
 			print_data_on_LCD(optimization_ON);
 			// SELECT
 			uint8_t d=0;
-			if(button_1==STATUS_BUTTON_PRESS)      // Go in meny
+			if(button_1==STATUS_BUTTON_PRESS)      							// Go in meny
 			{
 					 uint8_t status=1;
-					 while(status)	// Do it during  when button button_1 don't press
+					 while(status)																	// Do it during  when button button_1 don't press
 					 {
 								HAL_Delay(500);   												
 								if(button_1==STATUS_BUTTON_PRESS)					// Check press  menu  button.
