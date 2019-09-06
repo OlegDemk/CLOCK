@@ -210,9 +210,9 @@ int main(void)
 	//NRF24_ini();
   //init_DS3231(11, 11, 11, 1, 11, 11);
 
-	//HAL_Delay(3000);
-	//I2C_scaner();
-	//HAL_Delay(3000);
+	HAL_Delay(10000);
+	I2C_scaner();
+	HAL_Delay(30000);
 	//HAL_TIM_Base_Init(&htim2);
 
 	HAL_TIM_Base_Start_IT(&htim2);
